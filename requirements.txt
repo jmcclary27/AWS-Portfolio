@@ -1,0 +1,8 @@
+# Core AWS CLI tools
+awscli>=1.32.0
+
+# Boto3 SDK (lets you script AWS in Python if needed)
+boto3>=1.34.0
+
+# Helper for YAML/JSON processing in Python
+pyyaml>=6.0.1
