@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaden McClary Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* ensures footer stays at bottom */
+    }
+
+    /* Navbar */
+    nav {
+      background-color: #500000; /* maroon */
+      display: flex;
+      justify-content: center; /* center buttons */
+      gap: 2rem;
+      padding: 1rem 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Page container */
+    .page {
+      display: none;
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      flex: 1; /* take remaining space above footer */
+    }
+    .page.active {
+      display: block;
+    }
+
+    /* Content boxes */
+    .box {
+      background-color: #f7f7f7;
+      border: 2px solid #500000;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .box h2 {
+      color: #500000;
+      margin-top: 0;
+    }
+
+    /* Resume iframe */
+    iframe {
+      width: 100%;
+      height: 80vh;
+      border: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #f0f0f0;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    footer a img {
+      width: 32px;
+      height: 32px;
+      transition: transform 0.2s;
+    }
+    footer a img:hover {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <a href="#" onclick="showPage('home')">Home</a>
+    <a href="#" onclick="showPage('resume')">Resume</a>
+  </nav>
+
+  <!-- Home Page -->
+  <section id="home" class="page active">
+    <div class="box">
+      <h2>About Me</h2>
+      <p>Hello! I’m Jaden McClary, a Computer Science student passionate about software engineering, machine learning, and building impactful projects. Welcome to my portfolio site!</p>
+    </div>
+    <div class="box">
+      <h2>About This Website</h2>
+      <p>This website was built using AWS S3, CloudFront, and Route 53. It’s designed as a simple, serverless portfolio to showcase my work and resume.</p>
+    </div>
+  </section>
+
+  <!-- Resume Page -->
+  <section id="resume" class="page">
+    <h2 style="color:#500000;">My Resume</h2>
+    <p>If the PDF does not load, you can <a href="McClary, Jaden Resume.pdf" target="_blank">download it here</a>.</p>
+    <iframe src="McClary, Jaden Resume.pdf"></iframe>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <a href="https://github.com/jmcclary27" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+    </a>
+    <a href="https://www.linkedin.com/in/jaden-mcclary-2793512a1/" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn">
+    </a>
+  </footer>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+    }
+  </script>
+</body>
+</html>
