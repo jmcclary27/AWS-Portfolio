@@ -1,10 +1,12 @@
+# .github/workflows/deploy.yml
 name: Deploy static site to S3 + CloudFront
+
 on:
   push:
     branches: [ main ]
-    # only run when website files change:
     paths:
       - 'site/**'
+      - '.github/workflows/deploy.yml'
 
 jobs:
   deploy:
@@ -28,23 +30,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Sync site to S3
+      # Sync "site/" folder to bucket ROOT; e.g. site/resume/Resume.pdf -> s3://bucket/resume/Resume.pdf
+      - name: Sync site/ to S3 root
         run: |
           aws s3 sync site s3://$S3_BUCKET --delete --region $AWS_REGION
 
-      - name: Set no-cache on resume.pdf (optional)
-        if: ${{ hashFiles('site/resume.pdf') != '' }}
-        run: |
-          if [ -f site/resume.pdf ]; then
-            aws s3 cp site/resume.pdf s3://$S3_BUCKET/resume.pdf \
-              --region $AWS_REGION \
-              --content-type application/pdf \
-              --cache-control "no-cache, no-store, must-revalidate" \
-              --metadata-directive REPLACE
-          fi
-
-      - name: Invalidate CloudFront
+      - name: Invalidate CloudFront (index + resume)
         run: |
           aws cloudfront create-invalidation \
             --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
-            --paths "/*"
+            --paths "/index.html" "/resume/*"

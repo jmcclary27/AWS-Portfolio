@@ -6,3 +6,6 @@ boto3>=1.34.0
 
 # Helper for YAML/JSON processing in Python
 pyyaml>=6.0.1
+
+# Watcher for resume
+watchdog>=6.0.0
