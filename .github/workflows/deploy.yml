@@ -1,12 +1,15 @@
-# .github/workflows/deploy.yml
 name: Deploy static site to S3 + CloudFront
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - 'site/**'
-      - '.github/workflows/deploy.yml'
+      - "site/**"
+      - "scripts/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
 
 jobs:
   deploy:
@@ -16,12 +19,24 @@ jobs:
       contents: read
 
     env:
-      S3_BUCKET: portfolio-jaden
-      CLOUDFRONT_DISTRIBUTION_ID: EJO8JZXNMBOQC
-      AWS_REGION: us-east-2
+      S3_BUCKET: ${{ vars.PORTFOLIO_S3_BUCKET }}
+      CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.PORTFOLIO_CLOUDFRONT_DISTRIBUTION_ID }}
+      AWS_REGION: ${{ vars.PORTFOLIO_AWS_REGION }}
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Generate GitHub portfolio data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PORTFOLIO_TOKEN || github.token }}
+          PORTFOLIO_GITHUB_USERNAME: ${{ vars.PORTFOLIO_GITHUB_USERNAME }}
+          PORTFOLIO_DISPLAY_YEAR: ${{ vars.PORTFOLIO_DISPLAY_YEAR }}
+        run: node scripts/fetch-github-data.mjs --strict
 
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v4
@@ -30,13 +45,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      # Sync "site/" folder to bucket ROOT; e.g. site/resume/Resume.pdf -> s3://bucket/resume/Resume.pdf
       - name: Sync site/ to S3 root
-        run: |
-          aws s3 sync site s3://$S3_BUCKET --delete --region $AWS_REGION
+        run: aws s3 sync site s3://$S3_BUCKET --delete --region $AWS_REGION
 
-      - name: Invalidate CloudFront (index + resume)
+      - name: Invalidate CloudFront
         run: |
           aws cloudfront create-invalidation \
             --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
-            --paths "/index.html" "/resume/*"
+            --paths "/index.html" "/assets/*" "/data/*" "/resume/*"
