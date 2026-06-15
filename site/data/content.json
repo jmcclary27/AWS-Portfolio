@@ -1,0 +1,154 @@
+{
+  "site": {
+    "name": "Jaden McClary",
+    "role": "Software Engineer",
+    "description": "Recruiter-facing software engineering portfolio with featured projects, technical strengths, and a static GitHub activity dashboard.",
+    "githubUsername": "jmcclary27",
+    "displayYear": 2026
+  },
+  "hero": {
+    "eyebrow": "Software engineering portfolio",
+    "headline": "I build dependable software systems that make complex work feel simple.",
+    "summary": "This site is designed for recruiters and hiring teams to quickly understand how I think, what I build, and how consistently I ship. I will tailor the copy more specifically later, but the structure is ready for that story now.",
+    "focus": "Full-stack engineering, ML workflows, and CI/CD",
+    "location": "Texas, USA",
+    "asideTitle": "A quick way to evaluate fit",
+    "asideSummary": "Instead of just listing tools, this portfolio pairs project highlights with a GitHub activity dashboard so you can see both the results and the operating habits behind them.",
+    "primaryCta": {
+      "label": "View GitHub",
+      "url": "https://github.com/jmcclary27"
+    },
+    "secondaryCta": {
+      "label": "Jump to Resume",
+      "url": "#resume"
+    }
+  },
+  "about": {
+    "eyebrow": "About me",
+    "title": "The kind of engineer I aim to be",
+    "intro": "These paragraphs are intentionally editable so you can tune the voice for internships, new-grad roles, or specific recruiter outreach without touching the layout.",
+    "paragraphs": [
+      "I enjoy building software that balances product thinking with engineering discipline. The work I am most energized by usually sits at the intersection of clean interfaces, automation, and measurable impact.",
+      "My interests span application development, machine learning systems, deployment workflows, and the practical details that make a project reliable once it leaves the prototype stage.",
+      "I care about making technical work legible to other people. That means writing maintainable code, structuring information clearly, and leaving behind systems that teammates can actually extend."
+    ]
+  },
+  "skills": {
+    "eyebrow": "Strengths",
+    "title": "What I bring to a team",
+    "intro": "A recruiter should be able to scan this section in under a minute and come away with a strong signal on both technical depth and execution style.",
+    "items": [
+      {
+        "kicker": "Build",
+        "title": "Product-minded frontend and full-stack development",
+        "description": "I like turning ambiguous requirements into clear interfaces, useful interactions, and implementation details that can survive real usage.",
+        "tags": ["JavaScript", "TypeScript", "HTML/CSS", "UX thinking"]
+      },
+      {
+        "kicker": "Operate",
+        "title": "Automation, deployments, and engineering workflows",
+        "description": "I pay attention to the path from local development to production, including CI/CD, static hosting, environment boundaries, and release reliability.",
+        "tags": ["GitHub Actions", "AWS", "CloudFront", "S3"]
+      },
+      {
+        "kicker": "Analyze",
+        "title": "Data-driven problem solving",
+        "description": "I enjoy projects that require debugging, instrumentation, experimentation, and turning raw system behavior into actionable next steps.",
+        "tags": ["Python", "APIs", "Metrics", "Debugging"]
+      },
+      {
+        "kicker": "Collaborate",
+        "title": "Clear communication and ownership",
+        "description": "I value documentation, structured handoffs, and the kind of momentum that helps teams trust both the process and the outcome.",
+        "tags": ["Documentation", "Teamwork", "Leadership", "Execution"]
+      }
+    ]
+  },
+  "featuredRepos": [
+    "AWS-Portfolio"
+  ],
+  "projects": {
+    "eyebrow": "Selected work",
+    "title": "Projects that show how I build",
+    "intro": "These cards are fed from GitHub metadata so the portfolio stays honest about what is active, what technologies are involved, and where a reviewer can go deeper.",
+    "emptyState": "Add repository names to site/data/content.json or configure the GitHub token to populate these project cards automatically."
+  },
+  "github": {
+    "eyebrow": "GitHub dashboard",
+    "title": "A live view of how I work in 2026",
+    "intro": "The goal here is not vanity metrics. It is to show consistency, code review participation, and the shape of my output over time in a recruiter-friendly format.",
+    "heatmapHelper": "Keyboard focus and hover both reveal daily counts.",
+    "callout": "This panel highlights rhythm rather than just totals, which helps frame how steadily I contribute across the year.",
+    "topRepoEmptyState": "Top contribution repositories will appear after the first successful GitHub sync.",
+    "activityEmptyState": "Recent pull requests, issues, commits, and reviews will appear here once GitHub data is available.",
+    "languageTitle": "Languages and tool surfaces",
+    "readingTitle": "How to read these stats",
+    "readingSummary": "Commit counts alone rarely tell the full story, so this section also surfaces pull requests, issues, and reviews to better represent collaboration and delivery."
+  },
+  "leadership": {
+    "eyebrow": "Leadership and service",
+    "title": "Technical drive with community orientation",
+    "intro": "I kept this section concise for recruiter audiences, while still showing that leadership and service are a meaningful part of how I operate.",
+    "highlights": [
+      {
+        "kicker": "Organize",
+        "title": "Leading service projects at scale",
+        "description": "I have coordinated people, logistics, and execution for service initiatives that required planning ahead, delegating well, and staying calm when details shifted."
+      },
+      {
+        "kicker": "Support",
+        "title": "Showing up consistently for others",
+        "description": "Whether the setting is technical or community-based, I try to contribute in a way that makes the group more effective and the work more sustainable."
+      },
+      {
+        "kicker": "Translate",
+        "title": "Making ownership visible",
+        "description": "The same mindset that helps with service work also shows up in engineering: notice what needs doing, take responsibility, and leave things better than you found them."
+      }
+    ]
+  },
+  "resume": {
+    "eyebrow": "Resume",
+    "title": "A recruiter-ready handoff",
+    "intro": "Keep the resume in the existing site bucket path and this section will continue to link to it directly.",
+    "cardTitle": "Download the latest resume",
+    "summary": "The resume remains the fast handoff artifact for recruiter screens, while the rest of the site provides the context behind the bullet points.",
+    "primaryAction": "Open resume PDF",
+    "secondaryAction": "Contact me",
+    "detailTitle": "What this page adds beyond a PDF",
+    "detailSummary": "This portfolio complements the resume with richer project context, visible GitHub activity, and a stronger sense of how I execute over time.",
+    "footnote": "Update the URL below if your resume path changes.",
+    "url": "resume/Resume.pdf"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Easy next steps for hiring teams",
+    "intro": "This section is intentionally direct so recruiters can move from interest to outreach without hunting for links.",
+    "links": [
+      {
+        "kicker": "GitHub",
+        "label": "github.com/jmcclary27",
+        "description": "Browse repositories, activity, and the source behind the portfolio metrics.",
+        "cta": "Open GitHub profile",
+        "url": "https://github.com/jmcclary27",
+        "external": true
+      },
+      {
+        "kicker": "LinkedIn",
+        "label": "linkedin.com/in/jaden-mcclary-2793512a1",
+        "description": "Best for recruiter outreach, networking context, and experience snapshots.",
+        "cta": "Open LinkedIn",
+        "url": "https://www.linkedin.com/in/jaden-mcclary-2793512a1/",
+        "external": true
+      },
+      {
+        "kicker": "Email",
+        "label": "your-email@example.com",
+        "description": "Swap this placeholder with your preferred recruiter contact email.",
+        "cta": "Send email",
+        "url": "mailto:your-email@example.com",
+        "external": false
+      }
+    ]
+  }
+}

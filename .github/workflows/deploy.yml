@@ -1,0 +1,55 @@
+name: Deploy static site to S3 + CloudFront
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "scripts/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    env:
+      S3_BUCKET: ${{ vars.PORTFOLIO_S3_BUCKET }}
+      CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.PORTFOLIO_CLOUDFRONT_DISTRIBUTION_ID }}
+      AWS_REGION: ${{ vars.PORTFOLIO_AWS_REGION }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Generate GitHub portfolio data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PORTFOLIO_TOKEN || github.token }}
+          PORTFOLIO_GITHUB_USERNAME: ${{ vars.PORTFOLIO_GITHUB_USERNAME }}
+          PORTFOLIO_DISPLAY_YEAR: ${{ vars.PORTFOLIO_DISPLAY_YEAR }}
+        run: node scripts/fetch-github-data.mjs --strict
+
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync site/ to S3 root
+        run: aws s3 sync site s3://$S3_BUCKET --delete --region $AWS_REGION
+
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+            --paths "/index.html" "/assets/*" "/data/*" "/resume/*"

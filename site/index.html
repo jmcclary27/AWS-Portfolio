@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+    <meta
+      name="description"
+      content="Recruiter-focused portfolio with featured projects and a live GitHub activity dashboard."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <span class="brand-mark" aria-hidden="true">JM</span>
+          <div>
+            <p class="eyebrow" id="brand-eyebrow">Recruiter Portfolio</p>
+            <a class="brand-link" href="#hero" id="brand-name">Loading portfolio...</a>
+          </div>
+        </div>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#github">GitHub</a>
+          <a href="#resume">Resume</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main">
+        <div id="app" aria-live="polite"></div>
+      </main>
+    </div>
+
+    <template id="loading-state">
+      <section class="loading-panel">
+        <p class="eyebrow">Building the page</p>
+        <h1>Loading portfolio data...</h1>
+      </section>
+    </template>
+
+    <noscript>
+      <section class="loading-panel">
+        <p class="eyebrow">JavaScript required</p>
+        <h1>This portfolio needs JavaScript enabled to render its GitHub dashboard.</h1>
+      </section>
+    </noscript>
+
+    <script type="module" src="assets/app.js"></script>
+  </body>
+</html>
