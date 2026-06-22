@@ -64,6 +64,7 @@ function renderPortfolio(content, github) {
     },
   ];
 
+  const timeZone = content.site.timeZone || "UTC";
   const githubStatusMessage = buildGithubStatusMessage(github);
 
   app.innerHTML = `
@@ -89,14 +90,16 @@ function renderPortfolio(content, github) {
             .join("")}
         </div>
       </div>
-      <aside class="hero-aside">
-        <div class="hero-card">
-          <p class="eyebrow">Why this portfolio exists</p>
-          <h2>${escapeHtml(content.hero.asideTitle)}</h2>
-          <p>${escapeHtml(content.hero.asideSummary)}</p>
+      <aside class="hero-card hero-fit-card">
+        <div class="hero-fit-copy">
+          <div class="hero-fit-intro">
+            <p class="eyebrow">Why this portfolio exists</p>
+            <h2>${escapeHtml(content.hero.asideTitle)}</h2>
+            <p>${escapeHtml(content.hero.asideSummary)}</p>
+          </div>
           <div class="mini-stat-row">
             <div class="mini-stat">
-              <span class="mini-label">2026 Contributions</span>
+              <span class="mini-label">${escapeHtml(String(github.year))} Contributions</span>
               <strong>${formatNumber(github.summaryStats.totalContributions)}</strong>
             </div>
             <div class="mini-stat">
@@ -105,7 +108,113 @@ function renderPortfolio(content, github) {
             </div>
           </div>
         </div>
+        <div class="hero-heatmap-panel">
+          <div class="heatmap-header">
+            <div>
+              <span class="mini-label">${escapeHtml(String(github.year))} contribution map</span>
+              <h3>${formatNumber(github.contributionCalendar.totalContributions)} tracked contributions</h3>
+            </div>
+            <p class="heatmap-subtitle">${escapeHtml(content.github.heatmapHelper)}</p>
+          </div>
+          ${renderHeatmap(github.contributionCalendar.weeks)}
+        </div>
       </aside>
+    </section>
+
+    <section class="panel section-shell" id="projects">
+      <div class="section-heading">
+        <p class="eyebrow">${escapeHtml(content.projects.eyebrow)}</p>
+        <h2>${escapeHtml(content.projects.title)}</h2>
+        <p>${escapeHtml(content.projects.intro)}</p>
+      </div>
+      <div class="project-grid">
+        ${renderFeaturedProjects(github.featuredRepos, content.projects.emptyState)}
+      </div>
+    </section>
+
+    <section class="panel section-shell" id="resume">
+      <div class="section-heading">
+        <p class="eyebrow">${escapeHtml(content.resume.eyebrow)}</p>
+        <h2>${escapeHtml(content.resume.title)}</h2>
+        <p>${escapeHtml(content.resume.intro)}</p>
+      </div>
+      <div class="resume-grid">
+        <article class="resume-card">
+          <span class="mini-label">Snapshot</span>
+          <h2>${escapeHtml(content.resume.cardTitle)}</h2>
+          <p>${escapeHtml(content.resume.summary)}</p>
+          <div class="button-row">
+            <a class="button button-primary" href="${escapeHtml(content.resume.url)}" target="_blank" rel="noopener">${escapeHtml(content.resume.primaryAction)}</a>
+            <a class="button button-secondary" href="#contact">${escapeHtml(content.resume.secondaryAction)}</a>
+          </div>
+        </article>
+        <article class="resume-card">
+          <span class="mini-label">Current priorities</span>
+          <h2>${escapeHtml(content.resume.detailTitle)}</h2>
+          <p>${escapeHtml(content.resume.detailSummary)}</p>
+          <p class="footer-note">${escapeHtml(content.resume.footnote)}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel github-section" id="github" aria-labelledby="github-heading">
+      <div class="github-header">
+        <div>
+          <p class="eyebrow">${escapeHtml(content.github.eyebrow)}</p>
+          <h2 id="github-heading">${escapeHtml(content.github.title)}</h2>
+          <p>${escapeHtml(content.github.intro)}</p>
+        </div>
+        <div class="github-pill">Updated ${escapeHtml(formatDateTime(github.generatedAt, timeZone))}</div>
+      </div>
+      ${githubStatusMessage ? `<div class="status-banner">${escapeHtml(githubStatusMessage)}</div>` : ""}
+      <div class="stats-grid">
+        ${renderStats(github.summaryStats)}
+      </div>
+      <div class="dashboard-callout dashboard-callout-wide">
+        <div>
+          <span class="mini-label">Momentum</span>
+          <h3>${formatNumber(github.summaryStats.longestStreak)} day longest streak</h3>
+          <p>${escapeHtml(content.github.callout)}</p>
+        </div>
+        <div class="callout-list">
+          <div class="callout-item">
+            <span class="mini-label">Current streak</span>
+            <strong>${formatNumber(github.summaryStats.currentStreak)} days</strong>
+          </div>
+          <div class="callout-item">
+            <span class="mini-label">Average active day</span>
+            <strong>${formatDecimal(github.summaryStats.averagePerActiveDay)} contributions</strong>
+          </div>
+          <div class="callout-item">
+            <span class="mini-label">Repositories touched</span>
+            <strong>${formatNumber(github.summaryStats.repositoriesContributedTo)}</strong>
+          </div>
+        </div>
+        <div class="repo-ranking">
+          <span class="mini-label">Most active repos</span>
+          ${renderContributionRankings(github.topContributionRepos)}
+        </div>
+      </div>
+      <div class="repo-grid">
+        ${renderContributionRepos(github.topContributionRepos, content.github.topRepoEmptyState)}
+      </div>
+      <div class="activity-grid">
+        ${renderRecentActivity(github.recentActivity, content.github.activityEmptyState)}
+      </div>
+      <div class="copy-grid">
+        <article class="copy-card">
+          <span class="mini-label">Language mix</span>
+          <h3>${escapeHtml(content.github.languageTitle)}</h3>
+          <div class="chip-row">
+            ${renderLanguages(github.languageBreakdown)}
+          </div>
+        </article>
+        <article class="copy-card">
+          <span class="mini-label">What this shows</span>
+          <h3>${escapeHtml(content.github.readingTitle)}</h3>
+          <p>${escapeHtml(content.github.readingSummary)}</p>
+        </article>
+      </div>
     </section>
 
     <section class="panel section-shell" id="about">
@@ -153,89 +262,6 @@ function renderPortfolio(content, github) {
       </div>
     </section>
 
-    <section class="panel section-shell" id="projects">
-      <div class="section-heading">
-        <p class="eyebrow">${escapeHtml(content.projects.eyebrow)}</p>
-        <h2>${escapeHtml(content.projects.title)}</h2>
-        <p>${escapeHtml(content.projects.intro)}</p>
-      </div>
-      <div class="project-grid">
-        ${renderFeaturedProjects(github.featuredRepos, content.projects.emptyState)}
-      </div>
-    </section>
-
-    <section class="panel github-section" id="github" aria-labelledby="github-heading">
-      <div class="github-header">
-        <div>
-          <p class="eyebrow">${escapeHtml(content.github.eyebrow)}</p>
-          <h2 id="github-heading">${escapeHtml(content.github.title)}</h2>
-          <p>${escapeHtml(content.github.intro)}</p>
-        </div>
-        <div class="github-pill">Updated ${escapeHtml(formatDateTime(github.generatedAt))}</div>
-      </div>
-      ${githubStatusMessage ? `<div class="status-banner">${escapeHtml(githubStatusMessage)}</div>` : ""}
-      <div class="stats-grid">
-        ${renderStats(github.summaryStats)}
-      </div>
-      <div class="dashboard-layout">
-        <div class="heatmap-card copy-card">
-          <div class="heatmap-header">
-            <div>
-              <span class="mini-label">${escapeHtml(String(github.year))} contribution map</span>
-              <h3>${formatNumber(github.contributionCalendar.totalContributions)} tracked contributions</h3>
-            </div>
-            <p class="heatmap-subtitle">${escapeHtml(content.github.heatmapHelper)}</p>
-          </div>
-          ${renderHeatmap(github.contributionCalendar.weeks)}
-        </div>
-        <aside class="dashboard-callout">
-          <div>
-            <span class="mini-label">Momentum</span>
-            <h3>${formatNumber(github.summaryStats.longestStreak)} day longest streak</h3>
-            <p>${escapeHtml(content.github.callout)}</p>
-          </div>
-          <div class="callout-list">
-            <div class="callout-item">
-              <span class="mini-label">Current streak</span>
-              <strong>${formatNumber(github.summaryStats.currentStreak)} days</strong>
-            </div>
-            <div class="callout-item">
-              <span class="mini-label">Average active day</span>
-              <strong>${formatDecimal(github.summaryStats.averagePerActiveDay)} contributions</strong>
-            </div>
-            <div class="callout-item">
-              <span class="mini-label">Repositories touched</span>
-              <strong>${formatNumber(github.summaryStats.repositoriesContributedTo)}</strong>
-            </div>
-          </div>
-          <div class="repo-ranking">
-            <span class="mini-label">Most active repos</span>
-            ${renderContributionRankings(github.topContributionRepos)}
-          </div>
-        </aside>
-      </div>
-      <div class="repo-grid">
-        ${renderContributionRepos(github.topContributionRepos, content.github.topRepoEmptyState)}
-      </div>
-      <div class="activity-grid">
-        ${renderRecentActivity(github.recentActivity, content.github.activityEmptyState)}
-      </div>
-      <div class="copy-grid">
-        <article class="copy-card">
-          <span class="mini-label">Language mix</span>
-          <h3>${escapeHtml(content.github.languageTitle)}</h3>
-          <div class="chip-row">
-            ${renderLanguages(github.languageBreakdown)}
-          </div>
-        </article>
-        <article class="copy-card">
-          <span class="mini-label">What this shows</span>
-          <h3>${escapeHtml(content.github.readingTitle)}</h3>
-          <p>${escapeHtml(content.github.readingSummary)}</p>
-        </article>
-      </div>
-    </section>
-
     <section class="panel section-shell" id="leadership">
       <div class="section-heading">
         <p class="eyebrow">${escapeHtml(content.leadership.eyebrow)}</p>
@@ -254,31 +280,6 @@ function renderPortfolio(content, github) {
             `,
           )
           .join("")}
-      </div>
-    </section>
-
-    <section class="panel section-shell" id="resume">
-      <div class="section-heading">
-        <p class="eyebrow">${escapeHtml(content.resume.eyebrow)}</p>
-        <h2>${escapeHtml(content.resume.title)}</h2>
-        <p>${escapeHtml(content.resume.intro)}</p>
-      </div>
-      <div class="resume-grid">
-        <article class="resume-card">
-          <span class="mini-label">Snapshot</span>
-          <h2>${escapeHtml(content.resume.cardTitle)}</h2>
-          <p>${escapeHtml(content.resume.summary)}</p>
-          <div class="button-row">
-            <a class="button button-primary" href="${escapeHtml(content.resume.url)}" target="_blank" rel="noopener">${escapeHtml(content.resume.primaryAction)}</a>
-            <a class="button button-secondary" href="#contact">${escapeHtml(content.resume.secondaryAction)}</a>
-          </div>
-        </article>
-        <article class="resume-card">
-          <span class="mini-label">Current priorities</span>
-          <h2>${escapeHtml(content.resume.detailTitle)}</h2>
-          <p>${escapeHtml(content.resume.detailSummary)}</p>
-          <p class="footer-note">${escapeHtml(content.resume.footnote)}</p>
-        </article>
       </div>
     </section>
 
@@ -330,6 +331,11 @@ function renderFeaturedProjects(repos, emptyState) {
             <div class="project-meta">
               <span>${formatNumber(repo.stars)} stars</span>
               <span>${formatNumber(repo.forkCount)} forks</span>
+              ${
+                repo.isFork && repo.parentNameWithOwner
+                  ? `<span>Forked from ${escapeHtml(repo.parentNameWithOwner)}</span>`
+                  : ""
+              }
               <span>${escapeHtml(formatDate(repo.updatedAt))}</span>
             </div>
             <a href="${escapeHtml(repo.url)}" target="_blank" rel="noopener">View repository</a>
@@ -399,12 +405,14 @@ function renderHeatmap(weeks) {
             .map((day) => {
               const tooltip = `${formatDate(day.date)}: ${day.count} contribution${day.count === 1 ? "" : "s"}`;
               const outsideRange = day.inRange === false ? "true" : "false";
+              const tooltipPosition = day.weekday === 0 ? "below" : "above";
               return `
                 <button
                   type="button"
                   class="heatmap-day"
                   data-level="${escapeHtml(day.level)}"
                   data-outside-range="${outsideRange}"
+                  data-tooltip-position="${tooltipPosition}"
                   data-tooltip="${escapeHtml(tooltip)}"
                   aria-label="${escapeHtml(tooltip)}"
                 ></button>
@@ -636,14 +644,14 @@ function formatDate(dateValue) {
   });
 }
 
-function formatDateTime(dateValue) {
+function formatDateTime(dateValue, timeZone = "UTC") {
   if (!dateValue) {
     return "Unknown";
   }
   return new Date(dateValue).toLocaleString("en-US", {
     dateStyle: "medium",
     timeStyle: "short",
-    timeZone: "UTC",
+    timeZone,
   });
 }
 

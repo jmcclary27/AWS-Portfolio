@@ -4,13 +4,14 @@
     "role": "Software Engineer",
     "description": "Recruiter-facing software engineering portfolio with featured projects, technical strengths, and a static GitHub activity dashboard.",
     "githubUsername": "jmcclary27",
-    "displayYear": 2026
+    "displayYear": 2026,
+    "timeZone": "America/Chicago"
   },
   "hero": {
     "eyebrow": "Software engineering portfolio",
     "headline": "I build dependable software systems that make complex work feel simple.",
     "summary": "This site is designed for recruiters and hiring teams to quickly understand how I think, what I build, and how consistently I ship. I will tailor the copy more specifically later, but the structure is ready for that story now.",
-    "focus": "Full-stack engineering, ML workflows, and CI/CD",
+    "focus": "DevOps, ML workflows, and Full-stack engineering",
     "location": "Texas, USA",
     "asideTitle": "A quick way to evaluate fit",
     "asideSummary": "Instead of just listing tools, this portfolio pairs project highlights with a GitHub activity dashboard so you can see both the results and the operating habits behind them.",
@@ -65,7 +66,12 @@
     ]
   },
   "featuredRepos": [
-    "AWS-Portfolio"
+    "Market-Regime-Detection-With-Auto-Model-Switching",
+    "ACC-MLOps-Project",
+    "python-token-killer",
+    "automat-llm",
+    "LeetCode-Practice",
+    "Apple-Playlist-To-Spotify-Playlist"
   ],
   "projects": {
     "eyebrow": "Selected work",

@@ -12,6 +12,7 @@ await loadLocalEnv(path.join(repoRoot, ".env"));
 
 const strictMode = process.argv.includes("--strict");
 const now = new Date();
+const zonedPartFormatters = new Map();
 
 const content = await readJson(contentPath);
 const siteConfig = content.site ?? {};
@@ -19,10 +20,13 @@ const githubUsername =
   process.env.PORTFOLIO_GITHUB_USERNAME ||
   siteConfig.githubUsername ||
   "jmcclary27";
+const timeZone = assertValidTimeZone(
+  process.env.PORTFOLIO_TIME_ZONE || siteConfig.timeZone || "UTC",
+);
 const displayYear = Number(
   process.env.PORTFOLIO_DISPLAY_YEAR ||
     siteConfig.displayYear ||
-    now.getUTCFullYear(),
+    getZonedParts(now, timeZone).year,
 );
 const token = process.env.GITHUB_TOKEN || process.env.GH_PORTFOLIO_TOKEN || "";
 const featuredRepoRequests = normalizeFeaturedRepos(
@@ -45,6 +49,7 @@ try {
     displayYear,
     featuredRepoRequests,
     now,
+    timeZone,
   });
 
   await writeJson(outputPath, dashboardData);
@@ -64,6 +69,7 @@ try {
     displayYear,
     featuredRepoRequests,
     now,
+    timeZone,
     message,
     existingData,
   });
@@ -80,9 +86,13 @@ async function fetchDashboardData({
   displayYear,
   featuredRepoRequests,
   now,
+  timeZone,
 }) {
-  const rangeStart = new Date(Date.UTC(displayYear, 0, 1, 0, 0, 0)).toISOString();
-  const rangeEnd = now.toISOString();
+  const rangeStart = buildZonedDateTimeIso(
+    { year: displayYear, month: 1, day: 1, hour: 0, minute: 0, second: 0 },
+    timeZone,
+  );
+  const rangeEnd = buildContributionRangeEnd(displayYear, now, timeZone);
   const featuredRepoSelection = buildFeaturedRepoSelection(featuredRepoRequests);
   const query = `
     query PortfolioDashboard($login: String!, $from: DateTime!, $to: DateTime!) {
@@ -201,9 +211,14 @@ async function fetchDashboardData({
       nameWithOwner
       url
       description
+      isFork
       homepageUrl
       stargazerCount
       forkCount
+      parent {
+        nameWithOwner
+        url
+      }
       updatedAt
       primaryLanguage {
         name
@@ -594,6 +609,7 @@ function shapeRepo(repo, options = {}) {
     description: repo.description || "Description coming soon.",
     forkCount: repo.forkCount ?? 0,
     homepageUrl: repo.homepageUrl || "",
+    isFork: repo.isFork ?? false,
     isPinned: options.pinned ?? false,
     languageList: (repo.languages?.nodes ?? [])
       .filter(Boolean)
@@ -604,6 +620,8 @@ function shapeRepo(repo, options = {}) {
     name: repo.name,
     nameWithOwner: repo.nameWithOwner,
     openGraphImageUrl: repo.openGraphImageUrl || "",
+    parentNameWithOwner: repo.parent?.nameWithOwner || "",
+    parentUrl: repo.parent?.url || "",
     primaryLanguage: repo.primaryLanguage
       ? {
           color: repo.primaryLanguage.color || "#4f46e5",
@@ -641,13 +659,11 @@ function buildFallbackData({
   displayYear,
   featuredRepoRequests,
   now,
+  timeZone,
   message,
   existingData,
 }) {
-  const rangeEnd =
-    now.getUTCFullYear() === displayYear
-      ? now
-      : new Date(Date.UTC(displayYear, 11, 31, 23, 59, 59));
+  const rangeEndDate = buildContributionRangeEndDate(displayYear, now, timeZone);
 
   return {
     generatedAt: now.toISOString(),
@@ -680,18 +696,22 @@ function buildFallbackData({
       busiestDay: null,
     },
     contributionCalendar:
-      existingData?.contributionCalendar ?? buildEmptyContributionCalendar(displayYear, rangeEnd),
+      existingData?.contributionCalendar ??
+      buildEmptyContributionCalendar(displayYear, rangeEndDate),
     featuredRepos:
       existingData?.featuredRepos ??
       featuredRepoRequests.map((repo) => ({
         description: "Add a GitHub token to hydrate this project card with live repository metadata.",
         forkCount: 0,
         homepageUrl: "",
+        isFork: false,
         isPinned: true,
         languageList: [],
         name: repo.name,
         nameWithOwner: `${repo.owner}/${repo.name}`,
         openGraphImageUrl: "",
+        parentNameWithOwner: "",
+        parentUrl: "",
         primaryLanguage: null,
         stars: 0,
         topics: [],
@@ -704,13 +724,13 @@ function buildFallbackData({
   };
 }
 
-function buildEmptyContributionCalendar(year, rangeEnd) {
-  const start = new Date(Date.UTC(year, 0, 1));
+function buildEmptyContributionCalendar(year, rangeEndDate) {
+  const start = parseCalendarDate(`${year}-01-01`);
   const startDay = start.getUTCDay();
   const calendarStart = new Date(start);
   calendarStart.setUTCDate(calendarStart.getUTCDate() - startDay);
 
-  const end = new Date(Date.UTC(rangeEnd.getUTCFullYear(), rangeEnd.getUTCMonth(), rangeEnd.getUTCDate()));
+  const end = parseCalendarDate(rangeEndDate);
   const endDay = end.getUTCDay();
   const calendarEnd = new Date(end);
   calendarEnd.setUTCDate(calendarEnd.getUTCDate() + (6 - endDay));
@@ -802,4 +822,118 @@ function stripEnvQuotes(value) {
 
 function roundToOneDecimal(value) {
   return Math.round(value * 10) / 10;
+}
+
+function assertValidTimeZone(timeZone) {
+  try {
+    new Intl.DateTimeFormat("en-US", { timeZone }).format(new Date());
+    return timeZone;
+  } catch (error) {
+    throw new Error(`Invalid portfolio time zone "${timeZone}".`);
+  }
+}
+
+function buildContributionRangeEnd(displayYear, now, timeZone) {
+  return displayYear === getZonedParts(now, timeZone).year
+    ? formatDateInTimeZoneIso(now, timeZone)
+    : buildZonedDateTimeIso(
+        { year: displayYear, month: 12, day: 31, hour: 23, minute: 59, second: 59 },
+        timeZone,
+      );
+}
+
+function buildContributionRangeEndDate(displayYear, now, timeZone) {
+  return displayYear === getZonedParts(now, timeZone).year
+    ? formatCalendarDate(getZonedParts(now, timeZone))
+    : `${displayYear}-12-31`;
+}
+
+function formatDateInTimeZoneIso(date, timeZone) {
+  const parts = getZonedParts(date, timeZone);
+  const offsetMinutes =
+    (Date.UTC(
+      parts.year,
+      parts.month - 1,
+      parts.day,
+      parts.hour,
+      parts.minute,
+      parts.second,
+    ) -
+      date.getTime()) /
+    60000;
+
+  return `${formatCalendarDate(parts)}T${padTime(parts.hour)}:${padTime(parts.minute)}:${padTime(parts.second)}${formatOffset(offsetMinutes)}`;
+}
+
+function buildZonedDateTimeIso(parts, timeZone) {
+  const { year, month, day, hour = 0, minute = 0, second = 0 } = parts;
+  const referenceDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+  const zonedReferenceParts = getZonedParts(referenceDate, timeZone);
+  const offsetMinutes =
+    (Date.UTC(
+      zonedReferenceParts.year,
+      zonedReferenceParts.month - 1,
+      zonedReferenceParts.day,
+      zonedReferenceParts.hour,
+      zonedReferenceParts.minute,
+      zonedReferenceParts.second,
+    ) -
+      referenceDate.getTime()) /
+    60000;
+
+  return `${formatCalendarDate({ year, month, day })}T${padTime(hour)}:${padTime(minute)}:${padTime(second)}${formatOffset(offsetMinutes)}`;
+}
+
+function getZonedParts(date, timeZone) {
+  let formatter = zonedPartFormatters.get(timeZone);
+
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23",
+    });
+    zonedPartFormatters.set(timeZone, formatter);
+  }
+
+  const values = {};
+  for (const part of formatter.formatToParts(date)) {
+    if (part.type !== "literal") {
+      values[part.type] = part.value;
+    }
+  }
+
+  return {
+    year: Number(values.year),
+    month: Number(values.month),
+    day: Number(values.day),
+    hour: Number(values.hour),
+    minute: Number(values.minute),
+    second: Number(values.second),
+  };
+}
+
+function parseCalendarDate(value) {
+  return new Date(`${value}T00:00:00Z`);
+}
+
+function formatCalendarDate({ year, month, day }) {
+  return `${year}-${padTime(month)}-${padTime(day)}`;
+}
+
+function formatOffset(offsetMinutes) {
+  const sign = offsetMinutes >= 0 ? "+" : "-";
+  const absoluteMinutes = Math.abs(Math.round(offsetMinutes));
+  const hours = Math.floor(absoluteMinutes / 60);
+  const minutes = absoluteMinutes % 60;
+  return `${sign}${padTime(hours)}:${padTime(minutes)}`;
+}
+
+function padTime(value) {
+  return String(value).padStart(2, "0");
 }

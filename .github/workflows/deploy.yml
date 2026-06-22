@@ -36,6 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PORTFOLIO_TOKEN || github.token }}
           PORTFOLIO_GITHUB_USERNAME: ${{ vars.PORTFOLIO_GITHUB_USERNAME }}
           PORTFOLIO_DISPLAY_YEAR: ${{ vars.PORTFOLIO_DISPLAY_YEAR }}
+          PORTFOLIO_TIME_ZONE: ${{ vars.PORTFOLIO_TIME_ZONE }}
         run: node scripts/fetch-github-data.mjs --strict
 
       - name: Configure AWS
