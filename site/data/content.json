@@ -149,10 +149,10 @@
       },
       {
         "kicker": "Email",
-        "label": "your-email@example.com",
-        "description": "Swap this placeholder with your preferred recruiter contact email.",
+        "label": "jadenmcclary@gmail.com",
+        "description": "Please feel free to contact with any questions/comments/concerns.",
         "cta": "Send email",
-        "url": "mailto:your-email@example.com",
+        "url": "mailto:jadenmcclary@gmail.com",
         "external": false
       }
     ]
