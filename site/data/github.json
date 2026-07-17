@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-22T03:14:46.329Z",
+  "generatedAt": "2026-07-17T02:12:55.729Z",
   "status": "live",
   "year": 2026,
   "username": "jmcclary27",
@@ -15,23 +15,23 @@
     "websiteUrl": null
   },
   "summaryStats": {
-    "totalContributions": 660,
-    "commits": 538,
-    "pullRequests": 44,
+    "totalContributions": 696,
+    "commits": 572,
+    "pullRequests": 45,
     "issues": 60,
     "reviews": 0,
-    "repositoriesContributedTo": 5,
-    "activeDays": 172,
-    "averagePerActiveDay": 3.8,
-    "currentStreak": 172,
-    "longestStreak": 172,
+    "repositoriesContributedTo": 6,
+    "activeDays": 196,
+    "averagePerActiveDay": 3.6,
+    "currentStreak": 196,
+    "longestStreak": 196,
     "busiestDay": {
       "count": 34,
       "date": "2026-03-16"
     }
   },
   "contributionCalendar": {
-    "totalContributions": 660,
+    "totalContributions": 696,
     "weeks": [
       {
         "days": [
@@ -1162,10 +1162,172 @@
       {
         "days": [
           {
-            "count": 7,
+            "count": 10,
             "date": "2026-06-21",
             "level": "second_quartile",
             "weekday": 0
+          },
+          {
+            "count": 2,
+            "date": "2026-06-22",
+            "level": "first_quartile",
+            "weekday": 1
+          },
+          {
+            "count": 4,
+            "date": "2026-06-23",
+            "level": "first_quartile",
+            "weekday": 2
+          },
+          {
+            "count": 1,
+            "date": "2026-06-24",
+            "level": "first_quartile",
+            "weekday": 3
+          },
+          {
+            "count": 1,
+            "date": "2026-06-25",
+            "level": "first_quartile",
+            "weekday": 4
+          },
+          {
+            "count": 1,
+            "date": "2026-06-26",
+            "level": "first_quartile",
+            "weekday": 5
+          },
+          {
+            "count": 1,
+            "date": "2026-06-27",
+            "level": "first_quartile",
+            "weekday": 6
+          }
+        ]
+      },
+      {
+        "days": [
+          {
+            "count": 2,
+            "date": "2026-06-28",
+            "level": "first_quartile",
+            "weekday": 0
+          },
+          {
+            "count": 3,
+            "date": "2026-06-29",
+            "level": "first_quartile",
+            "weekday": 1
+          },
+          {
+            "count": 1,
+            "date": "2026-06-30",
+            "level": "first_quartile",
+            "weekday": 2
+          },
+          {
+            "count": 1,
+            "date": "2026-07-01",
+            "level": "first_quartile",
+            "weekday": 3
+          },
+          {
+            "count": 1,
+            "date": "2026-07-02",
+            "level": "first_quartile",
+            "weekday": 4
+          },
+          {
+            "count": 1,
+            "date": "2026-07-03",
+            "level": "first_quartile",
+            "weekday": 5
+          },
+          {
+            "count": 1,
+            "date": "2026-07-04",
+            "level": "first_quartile",
+            "weekday": 6
+          }
+        ]
+      },
+      {
+        "days": [
+          {
+            "count": 1,
+            "date": "2026-07-05",
+            "level": "first_quartile",
+            "weekday": 0
+          },
+          {
+            "count": 1,
+            "date": "2026-07-06",
+            "level": "first_quartile",
+            "weekday": 1
+          },
+          {
+            "count": 1,
+            "date": "2026-07-07",
+            "level": "first_quartile",
+            "weekday": 2
+          },
+          {
+            "count": 1,
+            "date": "2026-07-08",
+            "level": "first_quartile",
+            "weekday": 3
+          },
+          {
+            "count": 1,
+            "date": "2026-07-09",
+            "level": "first_quartile",
+            "weekday": 4
+          },
+          {
+            "count": 1,
+            "date": "2026-07-10",
+            "level": "first_quartile",
+            "weekday": 5
+          },
+          {
+            "count": 1,
+            "date": "2026-07-11",
+            "level": "first_quartile",
+            "weekday": 6
+          }
+        ]
+      },
+      {
+        "days": [
+          {
+            "count": 3,
+            "date": "2026-07-12",
+            "level": "first_quartile",
+            "weekday": 0
+          },
+          {
+            "count": 1,
+            "date": "2026-07-13",
+            "level": "first_quartile",
+            "weekday": 1
+          },
+          {
+            "count": 1,
+            "date": "2026-07-14",
+            "level": "first_quartile",
+            "weekday": 2
+          },
+          {
+            "count": 1,
+            "date": "2026-07-15",
+            "level": "first_quartile",
+            "weekday": 3
+          },
+          {
+            "count": 0,
+            "date": "2026-07-16",
+            "level": "none",
+            "weekday": 4
           }
         ]
       }
@@ -1184,12 +1346,12 @@
           "name": "Python"
         },
         {
-          "color": "#89e051",
-          "name": "Shell"
-        },
-        {
           "color": "#844FBA",
           "name": "HCL"
+        },
+        {
+          "color": "#89e051",
+          "name": "Shell"
         },
         {
           "color": "#384d54",
@@ -1198,7 +1360,7 @@
       ],
       "name": "Market-Regime-Detection-With-Auto-Model-Switching",
       "nameWithOwner": "jmcclary27/Market-Regime-Detection-With-Auto-Model-Switching",
-      "openGraphImageUrl": "https://opengraph.githubassets.com/d1ad1f8c12f3830caa3ebcd0cf8c5359e4774a30f31d429427de94a8cc5499fc/jmcclary27/Market-Regime-Detection-With-Auto-Model-Switching",
+      "openGraphImageUrl": "https://opengraph.githubassets.com/0c69b40419538acb41f7c88e857af2dd4e3041d294033ebe6ffe5b164336d535/jmcclary27/Market-Regime-Detection-With-Auto-Model-Switching",
       "parentNameWithOwner": "",
       "parentUrl": "",
       "primaryLanguage": {
@@ -1207,8 +1369,50 @@
       },
       "stars": 0,
       "topics": [],
-      "updatedAt": "2026-06-11T03:25:02Z",
+      "updatedAt": "2026-07-12T22:30:47Z",
       "url": "https://github.com/jmcclary27/Market-Regime-Detection-With-Auto-Model-Switching"
+    },
+    {
+      "description": "Description coming soon.",
+      "forkCount": 0,
+      "homepageUrl": "",
+      "isFork": false,
+      "isPinned": true,
+      "languageList": [
+        {
+          "color": "#3572A5",
+          "name": "Python"
+        },
+        {
+          "color": "#3178c6",
+          "name": "TypeScript"
+        },
+        {
+          "color": "#00ADD8",
+          "name": "Go Template"
+        },
+        {
+          "color": "#384d54",
+          "name": "Dockerfile"
+        },
+        {
+          "color": "#663399",
+          "name": "CSS"
+        }
+      ],
+      "name": "AWS-Dashboard",
+      "nameWithOwner": "jmcclary27/AWS-Dashboard",
+      "openGraphImageUrl": "https://opengraph.githubassets.com/26e9d4a9f3dfab6ec8ea8c98cff3be8e81e617139080df9464ca95aff146af3f/jmcclary27/AWS-Dashboard",
+      "parentNameWithOwner": "",
+      "parentUrl": "",
+      "primaryLanguage": {
+        "color": "#3572A5",
+        "name": "Python"
+      },
+      "stars": 0,
+      "topics": [],
+      "updatedAt": "2026-07-13T22:08:17Z",
+      "url": "https://github.com/jmcclary27/AWS-Dashboard"
     },
     {
       "description": "Description coming soon.",
@@ -1251,126 +1455,6 @@
       "topics": [],
       "updatedAt": "2026-04-20T01:06:46Z",
       "url": "https://github.com/jmcclary27/ACC-MLOps-Project"
-    },
-    {
-      "description": "Minimize LLM tokens from Python objects, code, logs, diffs, and more. Zero deps. Ultra-Lightweight.",
-      "forkCount": 0,
-      "homepageUrl": "",
-      "isFork": true,
-      "isPinned": true,
-      "languageList": [
-        {
-          "color": "#3572A5",
-          "name": "Python"
-        },
-        {
-          "color": "#427819",
-          "name": "Makefile"
-        },
-        {
-          "color": "#f1e05a",
-          "name": "JavaScript"
-        }
-      ],
-      "name": "python-token-killer",
-      "nameWithOwner": "jmcclary27/python-token-killer",
-      "openGraphImageUrl": "https://opengraph.githubassets.com/60e96b9cc1c5770a192d42812bcd5b8e6ae5983f69e3b916e592e8cb238c1c1b/jmcclary27/python-token-killer",
-      "parentNameWithOwner": "amahi2001/python-token-killer",
-      "parentUrl": "https://github.com/amahi2001/python-token-killer",
-      "primaryLanguage": {
-        "color": "#3572A5",
-        "name": "Python"
-      },
-      "stars": 0,
-      "topics": [],
-      "updatedAt": "2026-05-31T20:44:56Z",
-      "url": "https://github.com/jmcclary27/python-token-killer"
-    },
-    {
-      "description": "Mobile AI Assistant",
-      "forkCount": 0,
-      "homepageUrl": "",
-      "isFork": true,
-      "isPinned": true,
-      "languageList": [
-        {
-          "color": "#3572A5",
-          "name": "Python"
-        },
-        {
-          "color": "#384d54",
-          "name": "Dockerfile"
-        }
-      ],
-      "name": "automat-llm",
-      "nameWithOwner": "jmcclary27/automat-llm",
-      "openGraphImageUrl": "https://opengraph.githubassets.com/f5d8fa01a9c870a28c474c49dd00038b6239ba7de70b4c2217662079be111695/jmcclary27/automat-llm",
-      "parentNameWithOwner": "Team-Ferrous/Cybel",
-      "parentUrl": "https://github.com/Team-Ferrous/Cybel",
-      "primaryLanguage": {
-        "color": "#3572A5",
-        "name": "Python"
-      },
-      "stars": 0,
-      "topics": [],
-      "updatedAt": "2026-01-28T23:12:07Z",
-      "url": "https://github.com/jmcclary27/automat-llm"
-    },
-    {
-      "description": "Description coming soon.",
-      "forkCount": 0,
-      "homepageUrl": "",
-      "isFork": false,
-      "isPinned": true,
-      "languageList": [
-        {
-          "color": "#3572A5",
-          "name": "Python"
-        }
-      ],
-      "name": "LeetCode-Practice",
-      "nameWithOwner": "jmcclary27/LeetCode-Practice",
-      "openGraphImageUrl": "https://opengraph.githubassets.com/cf62b06dcfcf8155e7bd06ccf4268f9dee885c838d8aef371125076abfb186cd/jmcclary27/LeetCode-Practice",
-      "parentNameWithOwner": "",
-      "parentUrl": "",
-      "primaryLanguage": {
-        "color": "#3572A5",
-        "name": "Python"
-      },
-      "stars": 0,
-      "topics": [],
-      "updatedAt": "2026-06-21T19:05:35Z",
-      "url": "https://github.com/jmcclary27/LeetCode-Practice"
-    },
-    {
-      "description": "Description coming soon.",
-      "forkCount": 0,
-      "homepageUrl": "",
-      "isFork": false,
-      "isPinned": true,
-      "languageList": [
-        {
-          "color": "#3572A5",
-          "name": "Python"
-        },
-        {
-          "color": "#e34c26",
-          "name": "HTML"
-        }
-      ],
-      "name": "Apple-Playlist-To-Spotify-Playlist",
-      "nameWithOwner": "jmcclary27/Apple-Playlist-To-Spotify-Playlist",
-      "openGraphImageUrl": "https://opengraph.githubassets.com/d18e070b84d7193b10ded68a4611fb95f1a276826ee86bf3e1a3dc8047a0af1b/jmcclary27/Apple-Playlist-To-Spotify-Playlist",
-      "parentNameWithOwner": "",
-      "parentUrl": "",
-      "primaryLanguage": {
-        "color": "#3572A5",
-        "name": "Python"
-      },
-      "stars": 0,
-      "topics": [],
-      "updatedAt": "2025-12-03T20:17:07Z",
-      "url": "https://github.com/jmcclary27/Apple-Playlist-To-Spotify-Playlist"
     }
   ],
   "topContributionRepos": [
@@ -1392,13 +1476,13 @@
       },
       "stars": 0,
       "topics": [],
-      "updatedAt": "2026-06-11T03:25:02Z",
+      "updatedAt": "2026-07-12T22:30:47Z",
       "url": "https://github.com/jmcclary27/Market-Regime-Detection-With-Auto-Model-Switching",
-      "commits": 214,
+      "commits": 218,
       "issues": 1,
       "pullRequests": 35,
       "reviews": 0,
-      "total": 250
+      "total": 254
     },
     {
       "description": "Description coming soon.",
@@ -1444,13 +1528,13 @@
       },
       "stars": 0,
       "topics": [],
-      "updatedAt": "2026-06-21T19:05:35Z",
+      "updatedAt": "2026-07-16T03:42:51Z",
       "url": "https://github.com/jmcclary27/LeetCode-Practice",
-      "commits": 177,
+      "commits": 200,
       "issues": 0,
       "pullRequests": 0,
       "reviews": 0,
-      "total": 177
+      "total": 200
     },
     {
       "description": "Description coming soon.",
@@ -1470,13 +1554,39 @@
       },
       "stars": 0,
       "topics": [],
-      "updatedAt": "2026-06-22T01:32:32Z",
+      "updatedAt": "2026-06-22T03:47:44Z",
       "url": "https://github.com/jmcclary27/AWS-Portfolio",
-      "commits": 8,
+      "commits": 10,
       "issues": 0,
-      "pullRequests": 3,
+      "pullRequests": 4,
       "reviews": 0,
-      "total": 11
+      "total": 14
+    },
+    {
+      "description": "Description coming soon.",
+      "forkCount": 0,
+      "homepageUrl": "",
+      "isFork": false,
+      "isPinned": false,
+      "languageList": [],
+      "name": "AWS-Dashboard",
+      "nameWithOwner": "jmcclary27/AWS-Dashboard",
+      "openGraphImageUrl": "",
+      "parentNameWithOwner": "",
+      "parentUrl": "",
+      "primaryLanguage": {
+        "color": "#3572A5",
+        "name": "Python"
+      },
+      "stars": 0,
+      "topics": [],
+      "updatedAt": "2026-07-13T22:08:17Z",
+      "url": "https://github.com/jmcclary27/AWS-Dashboard",
+      "commits": 5,
+      "issues": 0,
+      "pullRequests": 0,
+      "reviews": 0,
+      "total": 5
     },
     {
       "description": "Description coming soon.",
@@ -1509,12 +1619,12 @@
     {
       "color": "#3572A5",
       "name": "Python",
-      "value": 635
+      "value": 664
     },
     {
       "color": "#f1e05a",
       "name": "JavaScript",
-      "value": 11
+      "value": 14
     },
     {
       "color": "#f34b7d",
@@ -1524,56 +1634,56 @@
   ],
   "recentActivity": [
     {
-      "date": "2026-06-22T01:32:13Z",
-      "repo": "jmcclary27/AWS-Portfolio",
-      "title": "trigger",
-      "type": "pull_request",
-      "url": "https://github.com/jmcclary27/AWS-Portfolio/pull/3"
-    },
-    {
-      "date": "2026-06-22T01:20:45Z",
-      "repo": "jmcclary27/AWS-Portfolio",
-      "title": "trigger",
-      "type": "pull_request",
-      "url": "https://github.com/jmcclary27/AWS-Portfolio/pull/2"
-    },
-    {
-      "date": "2026-06-21T07:00:00Z",
+      "date": "2026-07-15T07:00:00Z",
       "repo": "jmcclary27/LeetCode-Practice",
       "title": "Pushed 1 commit",
       "type": "commit",
       "url": "https://github.com/jmcclary27/LeetCode-Practice"
     },
     {
-      "date": "2026-06-21T07:00:00Z",
-      "repo": "jmcclary27/AWS-Portfolio",
-      "title": "Pushed 4 commits",
-      "type": "commit",
-      "url": "https://github.com/jmcclary27/AWS-Portfolio"
-    },
-    {
-      "date": "2026-06-20T07:00:00Z",
+      "date": "2026-07-14T07:00:00Z",
       "repo": "jmcclary27/LeetCode-Practice",
       "title": "Pushed 1 commit",
       "type": "commit",
       "url": "https://github.com/jmcclary27/LeetCode-Practice"
     },
     {
-      "date": "2026-06-19T07:00:00Z",
+      "date": "2026-07-13T07:00:00Z",
+      "repo": "jmcclary27/AWS-Dashboard",
+      "title": "Pushed 1 commit",
+      "type": "commit",
+      "url": "https://github.com/jmcclary27/AWS-Dashboard"
+    },
+    {
+      "date": "2026-07-12T07:00:00Z",
+      "repo": "jmcclary27/Market-Regime-Detection-With-Auto-Model-Switching",
+      "title": "Pushed 1 commit",
+      "type": "commit",
+      "url": "https://github.com/jmcclary27/Market-Regime-Detection-With-Auto-Model-Switching"
+    },
+    {
+      "date": "2026-07-12T07:00:00Z",
       "repo": "jmcclary27/LeetCode-Practice",
       "title": "Pushed 1 commit",
       "type": "commit",
       "url": "https://github.com/jmcclary27/LeetCode-Practice"
     },
     {
-      "date": "2026-06-18T07:00:00Z",
+      "date": "2026-07-12T07:00:00Z",
+      "repo": "jmcclary27/AWS-Dashboard",
+      "title": "Pushed 1 commit",
+      "type": "commit",
+      "url": "https://github.com/jmcclary27/AWS-Dashboard"
+    },
+    {
+      "date": "2026-07-11T07:00:00Z",
       "repo": "jmcclary27/LeetCode-Practice",
       "title": "Pushed 1 commit",
       "type": "commit",
       "url": "https://github.com/jmcclary27/LeetCode-Practice"
     },
     {
-      "date": "2026-06-17T07:00:00Z",
+      "date": "2026-07-10T07:00:00Z",
       "repo": "jmcclary27/LeetCode-Practice",
       "title": "Pushed 1 commit",
       "type": "commit",

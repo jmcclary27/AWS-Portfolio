@@ -24,6 +24,7 @@ async function boot() {
 
   applyHead(content);
   applyBrand(content);
+  applySocialLinks(content);
   renderPortfolio(content, github);
 }
 
@@ -46,6 +47,20 @@ function applyHead(content) {
 function applyBrand(content) {
   document.getElementById("brand-eyebrow").textContent = content.hero.eyebrow;
   document.getElementById("brand-name").textContent = content.site.name;
+}
+
+function applySocialLinks(content) {
+  const linksByKicker = new Map(
+    (content.contact?.links ?? []).map((link) => [link.kicker.toLowerCase(), link]),
+  );
+
+  ["github", "linkedin", "email"].forEach((network) => {
+    const link = linksByKicker.get(network);
+    const element = document.getElementById(`social-${network}`);
+    if (link && element) {
+      element.href = link.url;
+    }
+  });
 }
 
 function renderPortfolio(content, github) {
@@ -103,8 +118,8 @@ function renderPortfolio(content, github) {
               <strong>${formatNumber(github.summaryStats.totalContributions)}</strong>
             </div>
             <div class="mini-stat">
-              <span class="mini-label">Featured Repos</span>
-              <strong>${formatNumber(github.featuredRepos.length)}</strong>
+              <span class="mini-label">Current streak</span>
+              <strong>${formatNumber(github.summaryStats.currentStreak)} days</strong>
             </div>
           </div>
         </div>
@@ -128,7 +143,11 @@ function renderPortfolio(content, github) {
         <p>${escapeHtml(content.projects.intro)}</p>
       </div>
       <div class="project-grid">
-        ${renderFeaturedProjects(github.featuredRepos, content.projects.emptyState)}
+        ${renderFeaturedProjects(
+          github.featuredRepos,
+          content.projects.emptyState,
+          content.projects.descriptions,
+        )}
       </div>
     </section>
 
@@ -195,9 +214,6 @@ function renderPortfolio(content, github) {
           ${renderContributionRankings(github.topContributionRepos)}
         </div>
       </div>
-      <div class="repo-grid">
-        ${renderContributionRepos(github.topContributionRepos, content.github.topRepoEmptyState)}
-      </div>
       <div class="activity-grid">
         ${renderRecentActivity(github.recentActivity, content.github.activityEmptyState)}
       </div>
@@ -214,72 +230,6 @@ function renderPortfolio(content, github) {
           <h3>${escapeHtml(content.github.readingTitle)}</h3>
           <p>${escapeHtml(content.github.readingSummary)}</p>
         </article>
-      </div>
-    </section>
-
-    <section class="panel section-shell" id="about">
-      <div class="section-heading">
-        <p class="eyebrow">${escapeHtml(content.about.eyebrow)}</p>
-        <h2>${escapeHtml(content.about.title)}</h2>
-        <p>${escapeHtml(content.about.intro)}</p>
-      </div>
-      <div class="copy-grid">
-        ${content.about.paragraphs
-          .map(
-            (paragraph) => `
-              <article class="copy-card">
-                <p>${escapeHtml(paragraph)}</p>
-              </article>
-            `,
-          )
-          .join("")}
-      </div>
-    </section>
-
-    <section class="panel section-shell" id="skills">
-      <div class="section-heading">
-        <p class="eyebrow">${escapeHtml(content.skills.eyebrow)}</p>
-        <h2>${escapeHtml(content.skills.title)}</h2>
-        <p>${escapeHtml(content.skills.intro)}</p>
-      </div>
-      <div class="skill-grid">
-        ${content.skills.items
-          .map(
-            (item) => `
-              <article class="skill-card">
-                <span class="mini-label">${escapeHtml(item.kicker)}</span>
-                <h3>${escapeHtml(item.title)}</h3>
-                <p>${escapeHtml(item.description)}</p>
-                <div class="chip-row">
-                  ${item.tags
-                    .map((tag) => `<span class="chip">${escapeHtml(tag)}</span>`)
-                    .join("")}
-                </div>
-              </article>
-            `,
-          )
-          .join("")}
-      </div>
-    </section>
-
-    <section class="panel section-shell" id="leadership">
-      <div class="section-heading">
-        <p class="eyebrow">${escapeHtml(content.leadership.eyebrow)}</p>
-        <h2>${escapeHtml(content.leadership.title)}</h2>
-        <p>${escapeHtml(content.leadership.intro)}</p>
-      </div>
-      <div class="leadership-grid">
-        ${content.leadership.highlights
-          .map(
-            (item) => `
-              <article class="leadership-card">
-                <span class="mini-label">${escapeHtml(item.kicker)}</span>
-                <h3>${escapeHtml(item.title)}</h3>
-                <p>${escapeHtml(item.description)}</p>
-              </article>
-            `,
-          )
-          .join("")}
       </div>
     </section>
 
@@ -307,7 +257,7 @@ function renderPortfolio(content, github) {
   `;
 }
 
-function renderFeaturedProjects(repos, emptyState) {
+function renderFeaturedProjects(repos, emptyState, descriptions = {}) {
   if (!repos.length) {
     return `
       <article class="project-card">
@@ -323,7 +273,7 @@ function renderFeaturedProjects(repos, emptyState) {
         <article class="project-card">
           <span class="mini-label">${repo.isPinned ? "Featured repository" : "Repository"}</span>
           <h3>${escapeHtml(repo.name)}</h3>
-          <p>${escapeHtml(repo.description)}</p>
+          <p>${escapeHtml(descriptions[repo.name] || repo.description)}</p>
           <div class="chip-row">
             ${renderRepoTags(repo)}
           </div>
@@ -362,11 +312,6 @@ function renderStats(summaryStats) {
       label: "Issues",
       value: summaryStats.issues,
       helper: "Opened or triaged this year",
-    },
-    {
-      label: "Reviews",
-      value: summaryStats.reviews,
-      helper: "PR reviews completed",
     },
   ];
 
@@ -476,45 +421,6 @@ function renderContributionRankings(repos) {
             <span style="width:${Math.max((repo.total / maxTotal) * 100, 8)}%"></span>
           </div>
         </div>
-      `,
-    )
-    .join("");
-}
-
-function renderContributionRepos(repos, emptyState) {
-  if (!repos.length) {
-    return `
-      <article class="repo-card">
-        <h3>Contribution breakdown unavailable</h3>
-        <p>${escapeHtml(emptyState)}</p>
-      </article>
-    `;
-  }
-
-  return repos
-    .map(
-      (repo) => `
-        <article class="repo-card">
-          <span class="mini-label">Contribution hotspot</span>
-          <h3>${escapeHtml(repo.nameWithOwner)}</h3>
-          <p>${escapeHtml(repo.description || "GitHub repository contributions for this year.")}</p>
-          <div class="repo-meta">
-            <span>${formatNumber(repo.commits)} commits</span>
-            <span>${formatNumber(repo.pullRequests)} PRs</span>
-            <span>${formatNumber(repo.issues)} issues</span>
-            <span>${formatNumber(repo.reviews)} reviews</span>
-          </div>
-          <footer>
-            <div class="chip-row">
-              ${
-                repo.primaryLanguage?.name
-                  ? `<span class="chip">${escapeHtml(repo.primaryLanguage.name)}</span>`
-                  : ""
-              }
-            </div>
-            <a href="${escapeHtml(repo.url)}" target="_blank" rel="noopener">Open repo</a>
-          </footer>
-        </article>
       `,
     )
     .join("");
