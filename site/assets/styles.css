@@ -225,7 +225,7 @@ img {
 .hero-copy h1 {
   margin: 0;
   font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(2.7rem, 6vw, 5rem);
+  font-size: clamp(2.45rem, 5.4vw, 4.5rem);
   line-height: 0.95;
 }
 
@@ -306,6 +306,11 @@ img {
 
 .button-primary {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+  color: #fff;
+}
+
+.resume-card .button-primary {
+  background: var(--surface-dark);
   color: #fff;
 }
 
@@ -552,7 +557,7 @@ img {
 }
 
 .stats-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .stat-card {
@@ -757,7 +762,7 @@ img {
 }
 
 .dashboard-callout-wide {
-  grid-template-columns: minmax(0, 1.05fr) minmax(220px, 0.9fr) minmax(220px, 1fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(220px, 0.9fr);
   gap: 1rem 1.2rem;
   align-items: start;
 }
@@ -782,44 +787,13 @@ img {
   border-top: 0;
 }
 
-.repo-ranking {
-  display: grid;
-  gap: 0.9rem;
-}
-
-.repo-rank {
-  display: grid;
-  gap: 0.45rem;
-}
-
-.repo-rank header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-}
-
-.repo-bar {
-  overflow: hidden;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.repo-bar span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--gold), var(--accent));
-}
-
 .leadership-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .resume-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
