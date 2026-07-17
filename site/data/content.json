@@ -40,9 +40,7 @@
   "github": {
     "eyebrow": "GitHub dashboard",
     "title": "A live view of how I work in 2026",
-    "heatmapHelper": "Keyboard focus and hover both reveal daily counts.",
-    "activityEmptyState": "Recent pull requests, issues, commits, and reviews will appear here once GitHub data is available.",
-    "languageTitle": "Languages and tool surfaces"
+    "heatmapHelper": "Keyboard focus and hover both reveal daily counts."
   },
   "resume": {
     "eyebrow": "Resume",
