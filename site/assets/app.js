@@ -196,9 +196,10 @@ function renderPortfolio(content, github) {
             <strong>${formatNumber(github.summaryStats.repositoriesContributedTo)}</strong>
           </div>
         </div>
-      </div>
-      <div class="activity-grid">
-        ${renderRecentActivity(github.recentActivity, content.github.activityEmptyState)}
+        <div class="repo-ranking">
+          <span class="mini-label">Most active repos</span>
+          ${renderContributionRankings(github.topContributionRepos)}
+        </div>
       </div>
       <div class="copy-grid">
         <article class="copy-card">
@@ -377,30 +378,26 @@ function renderHeatmap(weeks) {
   `;
 }
 
-function renderRecentActivity(activity, emptyState) {
-  if (!activity.length) {
-    return `
-      <article class="activity-card">
-        <h3>Recent activity will appear here</h3>
-        <p>${escapeHtml(emptyState)}</p>
-      </article>
-    `;
+function renderContributionRankings(repos) {
+  if (!repos.length) {
+    return `<p>No ranked repositories yet.</p>`;
   }
 
-  return activity
+  const maxTotal = Math.max(...repos.map((repo) => repo.total), 1);
+
+  return repos
+    .slice(0, 4)
     .map(
-      (item) => `
-        <article class="activity-card">
-          <span class="mini-label">${escapeHtml(item.type.replace("_", " "))}</span>
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(item.repo)}</p>
-          <footer>
-            <div class="activity-meta">
-              <span>${escapeHtml(formatDate(item.date))}</span>
-            </div>
-            <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener">View on GitHub</a>
-          </footer>
-        </article>
+      (repo) => `
+        <div class="repo-rank">
+          <header>
+            <strong>${escapeHtml(repo.nameWithOwner)}</strong>
+            <span>${formatNumber(repo.total)}</span>
+          </header>
+          <div class="repo-bar">
+            <span style="width:${Math.max((repo.total / maxTotal) * 100, 8)}%"></span>
+          </div>
+        </div>
       `,
     )
     .join("");

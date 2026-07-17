@@ -762,7 +762,7 @@ img {
 }
 
 .dashboard-callout-wide {
-  grid-template-columns: minmax(0, 1.05fr) minmax(220px, 0.9fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(220px, 0.9fr) minmax(220px, 1fr);
   gap: 1rem 1.2rem;
   align-items: start;
 }
@@ -785,6 +785,37 @@ img {
 .callout-item:first-child {
   padding-top: 0;
   border-top: 0;
+}
+
+.repo-ranking {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.repo-rank {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.repo-rank header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.repo-bar {
+  overflow: hidden;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.repo-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--gold), var(--accent));
 }
 
 .leadership-grid {
