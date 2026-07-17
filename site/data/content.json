@@ -10,11 +10,9 @@
   "hero": {
     "eyebrow": "Software engineering portfolio",
     "headline": "I build dependable software systems that make complex work feel simple.",
-    "summary": "This site is designed for recruiters and hiring teams to quickly understand how I think, what I build, and how consistently I ship. I will tailor the copy more specifically later, but the structure is ready for that story now.",
     "focus": "DevOps, ML workflows, and Full-stack engineering",
     "location": "Texas, USA",
     "asideTitle": "A quick way to evaluate fit",
-    "asideSummary": "Instead of just listing tools, this portfolio pairs project highlights with a GitHub activity dashboard so you can see both the results and the operating habits behind them.",
     "primaryCta": {
       "label": "View GitHub",
       "url": "https://github.com/jmcclary27"
@@ -32,7 +30,6 @@
   "projects": {
     "eyebrow": "Selected work",
     "title": "Projects that show how I build",
-    "intro": "A focused selection of projects that reflects the systems, tooling, and product work I enjoy building.",
     "descriptions": {
       "Market-Regime-Detection-With-Auto-Model-Switching": "An end-to-end, local-first MLOps pipeline that detects market regimes and automatically switches among specialized models.",
       "AWS-Dashboard": "A full-stack AWS cost-visibility dashboard with workspace access, authenticated collaboration, billing analysis, and cloud-ready deployment.",
@@ -43,36 +40,25 @@
   "github": {
     "eyebrow": "GitHub dashboard",
     "title": "A live view of how I work in 2026",
-    "intro": "The goal here is not vanity metrics. It is to show consistency, code review participation, and the shape of my output over time in a recruiter-friendly format.",
     "heatmapHelper": "Keyboard focus and hover both reveal daily counts.",
-    "callout": "This panel highlights rhythm rather than just totals, which helps frame how steadily I contribute across the year.",
     "activityEmptyState": "Recent pull requests, issues, commits, and reviews will appear here once GitHub data is available.",
-    "languageTitle": "Languages and tool surfaces",
-    "readingTitle": "How to read these stats",
-    "readingSummary": "Commit counts alone rarely tell the full story, so this section also surfaces pull requests, issues, and reviews to better represent collaboration and delivery."
+    "languageTitle": "Languages and tool surfaces"
   },
   "resume": {
     "eyebrow": "Resume",
     "title": "A recruiter-ready handoff",
-    "intro": "Keep the resume in the existing site bucket path and this section will continue to link to it directly.",
     "cardTitle": "Download the latest resume",
-    "summary": "The resume remains the fast handoff artifact for recruiter screens, while the rest of the site provides the context behind the bullet points.",
     "primaryAction": "Open resume PDF",
     "secondaryAction": "Contact me",
-    "detailTitle": "What this page adds beyond a PDF",
-    "detailSummary": "This portfolio complements the resume with richer project context, visible GitHub activity, and a stronger sense of how I execute over time.",
-    "footnote": "Update the URL below if your resume path changes.",
     "url": "resume/Resume.pdf"
   },
   "contact": {
     "eyebrow": "Contact",
     "title": "Easy next steps for hiring teams",
-    "intro": "This section is intentionally direct so recruiters can move from interest to outreach without hunting for links.",
     "links": [
       {
         "kicker": "GitHub",
         "label": "github.com/jmcclary27",
-        "description": "Browse repositories, activity, and the source behind the portfolio metrics.",
         "cta": "Open GitHub profile",
         "url": "https://github.com/jmcclary27",
         "external": true
@@ -80,7 +66,6 @@
       {
         "kicker": "LinkedIn",
         "label": "linkedin.com/in/jaden-mcclary-2793512a1",
-        "description": "Best for recruiter outreach, networking context, and experience snapshots.",
         "cta": "Open LinkedIn",
         "url": "https://www.linkedin.com/in/jaden-mcclary-2793512a1/",
         "external": true
@@ -88,10 +73,9 @@
       {
         "kicker": "Email",
         "label": "jadenmcclary@gmail.com",
-        "description": "Please feel free to contact with any questions/comments/concerns.",
-        "cta": "Send email",
-        "url": "mailto:jadenmcclary@gmail.com",
-        "external": false
+        "cta": "Compose in Gmail",
+        "url": "https://mail.google.com/mail/?view=cm&fs=1&to=jadenmcclary%40gmail.com",
+        "external": true
       }
     ]
   }

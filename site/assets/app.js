@@ -87,7 +87,6 @@ function renderPortfolio(content, github) {
       <div class="hero-copy">
         <p class="eyebrow">${escapeHtml(content.hero.eyebrow)}</p>
         <h1>${escapeHtml(content.hero.headline)}</h1>
-        <p>${escapeHtml(content.hero.summary)}</p>
         <div class="button-row">
           <a class="button button-primary" href="${escapeHtml(content.hero.primaryCta.url)}">${escapeHtml(content.hero.primaryCta.label)}</a>
           <a class="button button-secondary" href="${escapeHtml(content.hero.secondaryCta.url)}">${escapeHtml(content.hero.secondaryCta.label)}</a>
@@ -110,7 +109,6 @@ function renderPortfolio(content, github) {
           <div class="hero-fit-intro">
             <p class="eyebrow">Why this portfolio exists</p>
             <h2>${escapeHtml(content.hero.asideTitle)}</h2>
-            <p>${escapeHtml(content.hero.asideSummary)}</p>
           </div>
           <div class="mini-stat-row">
             <div class="mini-stat">
@@ -140,7 +138,6 @@ function renderPortfolio(content, github) {
       <div class="section-heading">
         <p class="eyebrow">${escapeHtml(content.projects.eyebrow)}</p>
         <h2>${escapeHtml(content.projects.title)}</h2>
-        <p>${escapeHtml(content.projects.intro)}</p>
       </div>
       <div class="project-grid">
         ${renderFeaturedProjects(
@@ -155,23 +152,15 @@ function renderPortfolio(content, github) {
       <div class="section-heading">
         <p class="eyebrow">${escapeHtml(content.resume.eyebrow)}</p>
         <h2>${escapeHtml(content.resume.title)}</h2>
-        <p>${escapeHtml(content.resume.intro)}</p>
       </div>
       <div class="resume-grid">
         <article class="resume-card">
           <span class="mini-label">Snapshot</span>
           <h2>${escapeHtml(content.resume.cardTitle)}</h2>
-          <p>${escapeHtml(content.resume.summary)}</p>
           <div class="button-row">
             <a class="button button-primary" href="${escapeHtml(content.resume.url)}" target="_blank" rel="noopener">${escapeHtml(content.resume.primaryAction)}</a>
             <a class="button button-secondary" href="#contact">${escapeHtml(content.resume.secondaryAction)}</a>
           </div>
-        </article>
-        <article class="resume-card">
-          <span class="mini-label">Current priorities</span>
-          <h2>${escapeHtml(content.resume.detailTitle)}</h2>
-          <p>${escapeHtml(content.resume.detailSummary)}</p>
-          <p class="footer-note">${escapeHtml(content.resume.footnote)}</p>
         </article>
       </div>
     </section>
@@ -181,7 +170,6 @@ function renderPortfolio(content, github) {
         <div>
           <p class="eyebrow">${escapeHtml(content.github.eyebrow)}</p>
           <h2 id="github-heading">${escapeHtml(content.github.title)}</h2>
-          <p>${escapeHtml(content.github.intro)}</p>
         </div>
         <div class="github-pill">Updated ${escapeHtml(formatDateTime(github.generatedAt, timeZone))}</div>
       </div>
@@ -193,7 +181,6 @@ function renderPortfolio(content, github) {
         <div>
           <span class="mini-label">Momentum</span>
           <h3>${formatNumber(github.summaryStats.longestStreak)} day longest streak</h3>
-          <p>${escapeHtml(content.github.callout)}</p>
         </div>
         <div class="callout-list">
           <div class="callout-item">
@@ -209,10 +196,6 @@ function renderPortfolio(content, github) {
             <strong>${formatNumber(github.summaryStats.repositoriesContributedTo)}</strong>
           </div>
         </div>
-        <div class="repo-ranking">
-          <span class="mini-label">Most active repos</span>
-          ${renderContributionRankings(github.topContributionRepos)}
-        </div>
       </div>
       <div class="activity-grid">
         ${renderRecentActivity(github.recentActivity, content.github.activityEmptyState)}
@@ -225,11 +208,6 @@ function renderPortfolio(content, github) {
             ${renderLanguages(github.languageBreakdown)}
           </div>
         </article>
-        <article class="copy-card">
-          <span class="mini-label">What this shows</span>
-          <h3>${escapeHtml(content.github.readingTitle)}</h3>
-          <p>${escapeHtml(content.github.readingSummary)}</p>
-        </article>
       </div>
     </section>
 
@@ -237,7 +215,6 @@ function renderPortfolio(content, github) {
       <div class="section-heading">
         <p class="eyebrow">${escapeHtml(content.contact.eyebrow)}</p>
         <h2>${escapeHtml(content.contact.title)}</h2>
-        <p>${escapeHtml(content.contact.intro)}</p>
       </div>
       <div class="contact-links">
         ${content.contact.links
@@ -246,7 +223,6 @@ function renderPortfolio(content, github) {
               <article class="contact-card">
                 <span class="mini-label">${escapeHtml(link.kicker)}</span>
                 <strong>${escapeHtml(link.label)}</strong>
-                <p>${escapeHtml(link.description)}</p>
                 <a href="${escapeHtml(link.url)}" ${link.external ? 'target="_blank" rel="noopener"' : ""}>${escapeHtml(link.cta)}</a>
               </article>
             `,
@@ -399,31 +375,6 @@ function renderHeatmap(weeks) {
       <span>More</span>
     </div>
   `;
-}
-
-function renderContributionRankings(repos) {
-  if (!repos.length) {
-    return `<p>No ranked repositories yet.</p>`;
-  }
-
-  const maxTotal = Math.max(...repos.map((repo) => repo.total), 1);
-
-  return repos
-    .slice(0, 4)
-    .map(
-      (repo) => `
-        <div class="repo-rank">
-          <header>
-            <strong>${escapeHtml(repo.nameWithOwner)}</strong>
-            <span>${formatNumber(repo.total)}</span>
-          </header>
-          <div class="repo-bar">
-            <span style="width:${Math.max((repo.total / maxTotal) * 100, 8)}%"></span>
-          </div>
-        </div>
-      `,
-    )
-    .join("");
 }
 
 function renderRecentActivity(activity, emptyState) {
