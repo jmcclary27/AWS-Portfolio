@@ -201,15 +201,6 @@ function renderPortfolio(content, github) {
           ${renderContributionRankings(github.topContributionRepos)}
         </div>
       </div>
-      <div class="copy-grid">
-        <article class="copy-card">
-          <span class="mini-label">Language mix</span>
-          <h3>${escapeHtml(content.github.languageTitle)}</h3>
-          <div class="chip-row">
-            ${renderLanguages(github.languageBreakdown)}
-          </div>
-        </article>
-      </div>
     </section>
 
     <section class="panel section-shell" id="contact">
@@ -398,22 +389,6 @@ function renderContributionRankings(repos) {
             <span style="width:${Math.max((repo.total / maxTotal) * 100, 8)}%"></span>
           </div>
         </div>
-      `,
-    )
-    .join("");
-}
-
-function renderLanguages(languages) {
-  if (!languages.length) {
-    return `<p>No language data available yet.</p>`;
-  }
-
-  return languages
-    .map(
-      (language) => `
-        <span class="chip" style="color:${escapeHtml(language.color || "#4f46e5")}">
-          ${escapeHtml(language.name)} (${formatNumber(language.value)})
-        </span>
       `,
     )
     .join("");
