@@ -108,17 +108,6 @@ async function fetchDashboardData({
         followers {
           totalCount
         }
-        repositories(
-          first: 12
-          ownerAffiliations: OWNER
-          privacy: PUBLIC
-          isFork: false
-          orderBy: { field: STARGAZERS, direction: DESC }
-        ) {
-          nodes {
-            ...RepoFields
-          }
-        }
         contributionsCollection(from: $from, to: $to) {
           contributionCalendar {
             totalContributions
@@ -255,7 +244,10 @@ async function fetchDashboardData({
   const contributions = user.contributionsCollection;
   const weeks = normalizeWeeks(contributions.contributionCalendar?.weeks ?? []);
   const days = weeks.flatMap((week) => week.days);
-  const streaks = calculateStreaks(days);
+  const streaks = calculateStreaks(
+    days,
+    formatCalendarDate(getZonedParts(now, timeZone)),
+  );
   const activeDays = days.filter((day) => day.count > 0);
   const busiestDay = activeDays.reduce(
     (topDay, currentDay) =>
@@ -263,11 +255,6 @@ async function fetchDashboardData({
     null,
   );
   const contributionRepoMap = aggregateContributionRepos(contributions);
-
-  const autoFeaturedRepos = (user.repositories?.nodes ?? [])
-    .filter(Boolean)
-    .map((repo) => shapeRepo(repo))
-    .slice(0, 6);
 
   const configuredFeaturedRepos = featuredRepoRequests
     .map((repoRequest, index) => {
@@ -279,10 +266,7 @@ async function fetchDashboardData({
     })
     .filter(Boolean);
 
-  const mergedFeaturedRepos = mergeReposWithFallback(
-    configuredFeaturedRepos,
-    autoFeaturedRepos,
-  ).slice(0, 6);
+  const mergedFeaturedRepos = configuredFeaturedRepos.slice(0, 3);
 
   return {
     generatedAt: now.toISOString(),
@@ -430,7 +414,7 @@ function normalizeContributionLevel(level, count) {
   return "fourth_quartile";
 }
 
-function calculateStreaks(days) {
+function calculateStreaks(days, currentDate) {
   let current = 0;
   let longest = 0;
   let rolling = 0;
@@ -444,8 +428,13 @@ function calculateStreaks(days) {
     }
   }
 
-  for (let index = days.length - 1; index >= 0; index -= 1) {
-    if (days[index].count > 0) {
+  const streakDays =
+    days.length && days[days.length - 1].date === currentDate && days[days.length - 1].count === 0
+      ? days.slice(0, -1)
+      : days;
+
+  for (let index = streakDays.length - 1; index >= 0; index -= 1) {
+    if (streakDays[index].count > 0) {
       current += 1;
     } else {
       break;
@@ -638,22 +627,6 @@ function shapeRepo(repo, options = {}) {
   };
 }
 
-function mergeReposWithFallback(primaryRepos, fallbackRepos) {
-  const seen = new Set();
-  const merged = [];
-
-  for (const repo of [...primaryRepos, ...fallbackRepos]) {
-    if (!repo?.nameWithOwner || seen.has(repo.nameWithOwner)) {
-      continue;
-    }
-
-    seen.add(repo.nameWithOwner);
-    merged.push(repo);
-  }
-
-  return merged;
-}
-
 function buildFallbackData({
   githubUsername,
   displayYear,
@@ -698,29 +671,35 @@ function buildFallbackData({
     contributionCalendar:
       existingData?.contributionCalendar ??
       buildEmptyContributionCalendar(displayYear, rangeEndDate),
-    featuredRepos:
-      existingData?.featuredRepos ??
-      featuredRepoRequests.map((repo) => ({
-        description: "Add a GitHub token to hydrate this project card with live repository metadata.",
-        forkCount: 0,
-        homepageUrl: "",
-        isFork: false,
-        isPinned: true,
-        languageList: [],
-        name: repo.name,
-        nameWithOwner: `${repo.owner}/${repo.name}`,
-        openGraphImageUrl: "",
-        parentNameWithOwner: "",
-        parentUrl: "",
-        primaryLanguage: null,
-        stars: 0,
-        topics: [],
-        updatedAt: now.toISOString(),
-        url: `https://github.com/${repo.owner}/${repo.name}`,
-      })),
+    featuredRepos: featuredRepoRequests.map((repo) =>
+      existingData?.featuredRepos?.find(
+        (existingRepo) => existingRepo.nameWithOwner === `${repo.owner}/${repo.name}`,
+      ) ?? buildFallbackFeaturedRepo(repo, now),
+    ),
     topContributionRepos: existingData?.topContributionRepos ?? [],
     languageBreakdown: existingData?.languageBreakdown ?? [],
     recentActivity: existingData?.recentActivity ?? [],
+  };
+}
+
+function buildFallbackFeaturedRepo(repo, now) {
+  return {
+    description: "Add a GitHub token to hydrate this project card with live repository metadata.",
+    forkCount: 0,
+    homepageUrl: "",
+    isFork: false,
+    isPinned: true,
+    languageList: [],
+    name: repo.name,
+    nameWithOwner: `${repo.owner}/${repo.name}`,
+    openGraphImageUrl: "",
+    parentNameWithOwner: "",
+    parentUrl: "",
+    primaryLanguage: null,
+    stars: 0,
+    topics: [],
+    updatedAt: now.toISOString(),
+    url: `https://github.com/${repo.owner}/${repo.name}`,
   };
 }
 
