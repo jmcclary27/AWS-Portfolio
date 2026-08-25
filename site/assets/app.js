@@ -223,6 +223,8 @@ function renderPortfolio(content, github) {
       </div>
     </section>
   `;
+
+  initializeHeatmapInteractions();
 }
 
 function renderFeaturedProjects(repos, emptyState, descriptions = {}) {
@@ -318,14 +320,12 @@ function renderHeatmap(weeks) {
             .map((day) => {
               const tooltip = `${formatDate(day.date)}: ${day.count} contribution${day.count === 1 ? "" : "s"}`;
               const outsideRange = day.inRange === false ? "true" : "false";
-              const tooltipPosition = day.weekday === 0 ? "below" : "above";
               return `
                 <button
                   type="button"
                   class="heatmap-day"
                   data-level="${escapeHtml(day.level)}"
                   data-outside-range="${outsideRange}"
-                  data-tooltip-position="${tooltipPosition}"
                   data-tooltip="${escapeHtml(tooltip)}"
                   aria-label="${escapeHtml(tooltip)}"
                 ></button>
@@ -367,6 +367,68 @@ function renderHeatmap(weeks) {
       <span>More</span>
     </div>
   `;
+}
+
+function initializeHeatmapInteractions() {
+  const days = app.querySelectorAll(".heatmap-day");
+  if (!days.length) {
+    return;
+  }
+
+  const tooltip = document.createElement("div");
+  tooltip.className = "heatmap-tooltip";
+  tooltip.id = "heatmap-tooltip";
+  tooltip.setAttribute("role", "tooltip");
+  tooltip.hidden = true;
+  document.body.append(tooltip);
+
+  let activeDay = null;
+
+  const positionTooltip = () => {
+    if (!activeDay || tooltip.hidden) {
+      return;
+    }
+
+    const targetBounds = activeDay.getBoundingClientRect();
+    const tooltipBounds = tooltip.getBoundingClientRect();
+    const margin = 12;
+    const gap = 8;
+    const preferredTop = targetBounds.top - tooltipBounds.height - gap;
+    const top =
+      preferredTop >= margin
+        ? preferredTop
+        : Math.min(window.innerHeight - tooltipBounds.height - margin, targetBounds.bottom + gap);
+    const left = Math.min(
+      Math.max(margin, targetBounds.left + targetBounds.width / 2 - tooltipBounds.width / 2),
+      window.innerWidth - tooltipBounds.width - margin,
+    );
+
+    tooltip.style.top = `${Math.max(margin, top)}px`;
+    tooltip.style.left = `${left}px`;
+  };
+
+  const showTooltip = (event) => {
+    activeDay = event.currentTarget;
+    tooltip.textContent = activeDay.dataset.tooltip;
+    tooltip.hidden = false;
+    positionTooltip();
+  };
+
+  const hideTooltip = () => {
+    tooltip.hidden = true;
+    activeDay = null;
+  };
+
+  days.forEach((day) => {
+    day.setAttribute("aria-describedby", tooltip.id);
+    day.addEventListener("pointerenter", showTooltip);
+    day.addEventListener("pointerleave", hideTooltip);
+    day.addEventListener("focus", showTooltip);
+    day.addEventListener("blur", hideTooltip);
+  });
+
+  window.addEventListener("resize", positionTooltip);
+  document.addEventListener("scroll", positionTooltip, true);
 }
 
 function renderContributionRankings(repos) {

@@ -599,7 +599,10 @@ img {
 
 .heatmap-scroll {
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-behavior: auto;
+  scrollbar-gutter: stable;
   padding-top: 0.35rem;
   padding-bottom: 0.85rem;
 }
@@ -607,9 +610,10 @@ img {
 .heatmap-board {
   --heatmap-cell-size: 13px;
   --heatmap-gap: 4px;
-  display: inline-grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  display: grid;
+  grid-template-columns: auto max-content;
   gap: 0.7rem;
+  width: max-content;
   min-width: 100%;
 }
 
@@ -694,13 +698,8 @@ img {
   outline-offset: 1px;
 }
 
-.heatmap-day:hover::after,
-.heatmap-day:focus-visible::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 8px);
-  transform: translateX(-50%);
+.heatmap-tooltip {
+  position: fixed;
   padding: 0.5rem 0.65rem;
   border-radius: 10px;
   background: rgba(17, 36, 43, 0.95);
@@ -710,13 +709,11 @@ img {
   white-space: nowrap;
   box-shadow: 0 12px 30px rgba(7, 14, 18, 0.28);
   pointer-events: none;
-  z-index: 4;
+  z-index: 1000;
 }
 
-.heatmap-day[data-tooltip-position="below"]:hover::after,
-.heatmap-day[data-tooltip-position="below"]:focus-visible::after {
-  top: calc(100% + 8px);
-  bottom: auto;
+.heatmap-tooltip[hidden] {
+  display: none;
 }
 
 .heatmap-legend {
