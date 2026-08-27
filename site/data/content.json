@@ -24,7 +24,7 @@
   },
   "featuredRepos": [
     "Market-Regime-Detection-With-Auto-Model-Switching",
-    "AWS-Dashboard",
+    "ML-Release-Platform",
     "ACC-MLOps-Project"
   ],
   "projects": {
@@ -32,7 +32,7 @@
     "title": "Projects that show how I build",
     "descriptions": {
       "Market-Regime-Detection-With-Auto-Model-Switching": "An end-to-end, local-first MLOps pipeline that detects market regimes and automatically switches among specialized models.",
-      "AWS-Dashboard": "A full-stack AWS cost-visibility dashboard with workspace access, authenticated collaboration, billing analysis, and cloud-ready deployment.",
+      "ML-Release-Platform": "A local-first Rust ML release control plane for registering model candidates, evaluating auditable policy gates, and orchestrating deployment, progressive rollout, promotion, and rollback workflows designed for Kubernetes, KServe, and Argo Rollouts.",
       "ACC-MLOps-Project": "A collaborative machine-learning application combining a Python/FastAPI backend, web frontend, model artifacts, and team delivery workflows."
     },
     "emptyState": "Add repository names to site/data/content.json or configure the GitHub token to populate these project cards automatically."

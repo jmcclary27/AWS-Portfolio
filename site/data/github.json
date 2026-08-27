@@ -1373,46 +1373,30 @@
       "url": "https://github.com/jmcclary27/Market-Regime-Detection-With-Auto-Model-Switching"
     },
     {
-      "description": "Description coming soon.",
+      "description": "A local-first Rust ML release control plane for registering model candidates, evaluating auditable policy gates, and orchestrating deployment, progressive rollout, promotion, and rollback workflows designed for Kubernetes, KServe, and Argo Rollouts.",
       "forkCount": 0,
       "homepageUrl": "",
       "isFork": false,
       "isPinned": true,
       "languageList": [
         {
-          "color": "#3572A5",
-          "name": "Python"
-        },
-        {
-          "color": "#3178c6",
-          "name": "TypeScript"
-        },
-        {
-          "color": "#00ADD8",
-          "name": "Go Template"
-        },
-        {
-          "color": "#384d54",
-          "name": "Dockerfile"
-        },
-        {
-          "color": "#663399",
-          "name": "CSS"
+          "color": "#dea584",
+          "name": "Rust"
         }
       ],
-      "name": "AWS-Dashboard",
-      "nameWithOwner": "jmcclary27/AWS-Dashboard",
-      "openGraphImageUrl": "https://opengraph.githubassets.com/26e9d4a9f3dfab6ec8ea8c98cff3be8e81e617139080df9464ca95aff146af3f/jmcclary27/AWS-Dashboard",
+      "name": "ML-Release-Platform",
+      "nameWithOwner": "jmcclary27/ML-Release-Platform",
+      "openGraphImageUrl": "",
       "parentNameWithOwner": "",
       "parentUrl": "",
       "primaryLanguage": {
-        "color": "#3572A5",
-        "name": "Python"
+        "color": "#dea584",
+        "name": "Rust"
       },
       "stars": 0,
       "topics": [],
-      "updatedAt": "2026-07-13T22:08:17Z",
-      "url": "https://github.com/jmcclary27/AWS-Dashboard"
+      "updatedAt": "2026-08-26T18:36:44Z",
+      "url": "https://github.com/jmcclary27/ML-Release-Platform"
     },
     {
       "description": "Description coming soon.",
